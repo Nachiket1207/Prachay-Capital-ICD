@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prachay — ICD Campaign Directory</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=Fraunces:ital,wght@0,400;0,700;0,900;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:       #060E0A;
+  --emerald:  #0A5C3A;
+  --green:    #12875A;
+  --mint:     #1FBE7E;
+  --mint-dim: #0D7A50;
+  --gold:     #D4A843;
+  --gold-lt:  #F0C96A;
+  --cream:    #F5F0E8;
+  --white:    #FFFFFF;
+  --text:     #E8F0EC;
+  --muted:    #7A9A8A;
+  --card-bg:  rgba(255,255,255,0.035);
+  --border:   rgba(31,190,126,0.18);
+  --gold-border: rgba(212,168,67,0.25);
+  --shadow:   0 24px 64px rgba(0,0,0,0.5);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;}
+
+/* ── MESH BG ── */
+body::before{
+  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 80% 60% at 10% 20%, rgba(10,92,58,0.25) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 80% at 90% 80%, rgba(18,135,90,0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 40% at 50% 50%, rgba(212,168,67,0.04) 0%, transparent 70%);
+}
+
+/* ── GRID LINES ── */
+body::after{
+  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:
+    linear-gradient(rgba(31,190,126,0.04) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(31,190,126,0.04) 1px,transparent 1px);
+  background-size:60px 60px;
+}
+
+.wrapper{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:0 48px;}
+
+/* ── NAV BAR ── */
+.topbar{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid rgba(31,190,126,0.12);
+  background:rgba(6,14,10,0.8);
+}
+.topbar-inner{
+  max-width:1280px;margin:0 auto;padding:0 48px;
+  height:64px;display:flex;align-items:center;justify-content:space-between;
+}
+.brand{font-family:'Fraunces',serif;font-size:20px;color:var(--white);}
+.brand span{color:var(--mint);}
+.nav-links{display:flex;gap:8px;}
+.nav-link{
+  padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;
+  color:var(--muted);cursor:pointer;transition:all 0.25s;border:none;background:transparent;
+}
+.nav-link:hover{color:var(--mint);background:rgba(31,190,126,0.08);}
+
+/* ── HERO ── */
+.hero{
+  min-height:100vh;display:flex;flex-direction:column;justify-content:center;
+  padding:120px 0 80px;position:relative;
+}
+.badge{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:10px 20px;border-radius:100px;
+  background:rgba(31,190,126,0.08);border:1px solid var(--border);
+  font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+  color:var(--mint);margin-bottom:36px;
+  animation:up 0.7s ease both;
+}
+.badge-pulse{width:8px;height:8px;background:var(--mint);border-radius:50%;animation:blink 1.8s infinite;}
+@keyframes blink{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(31,190,126,0.5)}50%{opacity:0.4;box-shadow:0 0 0 6px rgba(31,190,126,0)}}
+
+.hero-title{
+  font-family:'Fraunces',serif;
+  font-size:clamp(52px,8vw,110px);
+  font-weight:900;line-height:0.95;
+  animation:up 0.8s ease 0.1s both;
+}
+.hero-title .t1{display:block;color:var(--white);}
+.hero-title .t2{
+  display:block;
+  background:linear-gradient(120deg,var(--mint) 0%,var(--gold-lt) 60%,var(--mint) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  background-size:200%;animation:shimmer 4s linear infinite;
+}
+@keyframes shimmer{0%{background-position:0%}100%{background-position:200%}}
+
+.hero-desc{
+  font-size:18px;color:rgba(232,240,236,0.55);line-height:1.75;
+  max-width:560px;margin-top:28px;animation:up 0.8s ease 0.2s both;
+}
+
+.pill-row{
+  display:flex;gap:16px;flex-wrap:wrap;margin-top:56px;
+  animation:up 0.8s ease 0.3s both;
+}
+.pill{
+  display:flex;flex-direction:column;gap:6px;
+  padding:22px 32px;border-radius:18px;
+  background:rgba(255,255,255,0.04);border:1px solid var(--border);
+  backdrop-filter:blur(8px);transition:all 0.3s;cursor:default;
+}
+.pill:hover{background:rgba(31,190,126,0.08);border-color:var(--mint);transform:translateY(-5px);}
+.pill-val{font-family:'Fraunces',serif;font-size:38px;font-weight:700;color:var(--gold-lt);}
+.pill-key{font-size:11px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;}
+
+@keyframes up{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── DIRECTORY ── */
+.dir-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:2px;
+  background:var(--border);border-radius:20px;overflow:hidden;
+  border:1px solid var(--border);margin-bottom:100px;
+}
+.dir-btn{
+  background:rgba(6,14,10,0.95);padding:28px 30px;
+  border:none;cursor:pointer;text-align:left;color:var(--text);
+  display:flex;flex-direction:column;gap:8px;
+  transition:all 0.3s;
+}
+.dir-btn:hover{background:rgba(31,190,126,0.07);}
+.dir-num{font-family:'DM Mono',monospace;font-size:11px;color:var(--mint);opacity:0.7;}
+.dir-title{font-weight:700;font-size:15px;color:var(--white);}
+.dir-sub{font-size:12px;color:var(--muted);}
+.dir-arr{color:var(--mint);font-size:18px;margin-top:4px;transition:transform 0.3s;}
+.dir-btn:hover .dir-arr{transform:translateX(6px);}
+
+/* ── SECTION ── */
+.section{padding:100px 0;}
+.s-label{
+  font-size:11px;letter-spacing:3px;text-transform:uppercase;
+  color:var(--mint);font-weight:700;margin-bottom:12px;
+  display:flex;align-items:center;gap:12px;
+}
+.s-label::after{content:'';width:48px;height:1px;background:var(--mint);opacity:0.4;}
+.s-title{
+  font-family:'Fraunces',serif;font-size:clamp(32px,4vw,54px);
+  font-weight:700;line-height:1.1;color:var(--white);margin-bottom:56px;
+}
+.s-title span{color:var(--gold-lt);}
+
+/* ── PERSONA CARDS ── */
+.persona-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:24px;}
+.persona{
+  background:var(--card-bg);border:1px solid rgba(255,255,255,0.06);
+  border-radius:20px;padding:32px;transition:all 0.4s;
+  position:relative;overflow:hidden;
+}
+.persona::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--mint),var(--gold-lt));
+  transform:scaleX(0);transform-origin:left;transition:transform 0.4s;
+}
+.persona:hover::before{transform:scaleX(1);}
+.persona:hover{transform:translateY(-6px);border-color:var(--border);box-shadow:var(--shadow);}
+.p-icon{font-size:36px;margin-bottom:16px;}
+.p-label{
+  display:inline-block;font-size:10px;letter-spacing:2px;text-transform:uppercase;
+  color:var(--mint);background:rgba(31,190,126,0.1);border:1px solid var(--border);
+  padding:4px 12px;border-radius:100px;margin-bottom:14px;font-weight:700;
+}
+.p-title{font-weight:700;font-size:19px;color:var(--white);margin-bottom:10px;}
+.p-desc{font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:18px;}
+.p-points{display:flex;flex-direction:column;gap:7px;}
+.p-pt{font-size:13px;color:rgba(232,240,236,0.75);display:flex;gap:10px;line-height:1.5;}
+.p-pt::before{content:'◆';color:var(--mint);font-size:10px;flex-shrink:0;margin-top:3px;}
+
+/* ── PLATFORM STACK ── */
+.plat-stack{display:flex;flex-direction:column;gap:20px;}
+.plat-row{
+  display:grid;grid-template-columns:220px 1fr;gap:0;
+  background:var(--card-bg);border:1px solid rgba(255,255,255,0.06);
+  border-radius:18px;overflow:hidden;transition:all 0.3s;
+}
+.plat-row:hover{border-color:var(--border);transform:translateX(6px);}
+.plat-label{
+  padding:28px 24px;display:flex;flex-direction:column;gap:8px;
+  justify-content:center;
+}
+.plat-emoji{font-size:32px;}
+.plat-name{font-weight:700;font-size:17px;color:var(--white);}
+.plat-role{font-size:11px;color:var(--mint);font-weight:600;text-transform:uppercase;letter-spacing:1px;}
+.plat-freq{font-size:11px;color:var(--muted);}
+.plat-content{
+  padding:24px 28px;border-left:1px solid rgba(255,255,255,0.05);
+  display:grid;grid-template-columns:1fr 1fr;gap:8px;align-content:start;
+}
+.plat-item{
+  background:rgba(255,255,255,0.03);border-radius:10px;padding:10px 14px;
+  font-size:13px;color:rgba(232,240,236,0.7);line-height:1.5;
+}
+.plat-item strong{color:var(--gold-lt);display:block;font-size:11px;margin-bottom:3px;text-transform:uppercase;letter-spacing:0.5px;}
+
+/* bg variants per platform */
+.plat-li .plat-label{background:linear-gradient(160deg,rgba(10,102,194,0.12),rgba(6,14,10,0.8));}
+.plat-email .plat-label{background:linear-gradient(160deg,rgba(212,168,67,0.1),rgba(6,14,10,0.8));}
+.plat-wa .plat-label{background:linear-gradient(160deg,rgba(37,211,102,0.1),rgba(6,14,10,0.8));}
+.plat-yt .plat-label{background:linear-gradient(160deg,rgba(255,0,0,0.1),rgba(6,14,10,0.8));}
+.plat-off .plat-label{background:linear-gradient(160deg,rgba(212,168,67,0.08),rgba(6,14,10,0.8));}
+.plat-g .plat-label{background:linear-gradient(160deg,rgba(52,168,83,0.1),rgba(6,14,10,0.8));}
+
+/* ── FUNNEL ── */
+.funnel{display:flex;flex-direction:column;gap:0;}
+.f-step{display:grid;grid-template-columns:56px 1fr;position:relative;}
+.f-step::after{
+  content:'';position:absolute;left:27px;top:58px;bottom:-8px;
+  width:2px;background:linear-gradient(to bottom,var(--mint),rgba(31,190,126,0.08));
+}
+.f-step:last-child::after{display:none;}
+.f-num-col{display:flex;flex-direction:column;align-items:center;padding-top:14px;}
+.f-circle{
+  width:40px;height:40px;border-radius:50%;
+  border:2px solid var(--mint);display:flex;align-items:center;justify-content:center;
+  font-family:'DM Mono',monospace;font-size:14px;color:var(--mint);
+  background:var(--bg);z-index:1;flex-shrink:0;transition:all 0.3s;
+}
+.f-step:hover .f-circle{background:var(--mint);color:var(--bg);font-weight:700;transform:scale(1.1);}
+.f-body{padding:12px 0 48px 28px;}
+.f-tag{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:4px 14px;border-radius:100px;font-size:11px;font-weight:700;letter-spacing:1px;
+  text-transform:uppercase;margin-bottom:10px;
+}
+.f-title{font-weight:700;font-size:20px;color:var(--white);margin-bottom:6px;}
+.f-desc{font-size:13px;color:var(--muted);line-height:1.65;margin-bottom:14px;}
+.f-items{display:flex;flex-direction:column;gap:8px;}
+.f-item{
+  display:flex;align-items:flex-start;gap:12px;
+  background:var(--card-bg);border:1px solid rgba(255,255,255,0.05);
+  border-radius:12px;padding:12px 16px;
+  font-size:13px;color:rgba(232,240,236,0.7);line-height:1.5;
+  transition:all 0.3s;
+}
+.f-item:hover{background:rgba(31,190,126,0.06);border-color:var(--border);}
+.f-arrow{color:var(--mint);flex-shrink:0;}
+
+/* ── CALENDAR ── */
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;background:var(--border);border-radius:16px;overflow:hidden;border:1px solid var(--border);}
+.cal-hd{padding:12px 6px;text-align:center;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--mint);background:rgba(31,190,126,0.07);}
+.cal-cell{padding:14px 10px;min-height:130px;background:rgba(6,14,10,0.9);border-top:1px solid rgba(31,190,126,0.08);transition:background 0.3s;}
+.cal-cell:hover{background:rgba(31,190,126,0.05);}
+.cal-cell.hot{background:rgba(31,190,126,0.04);border-top:2px solid var(--mint);}
+.badg{display:inline-block;font-size:9px;font-weight:700;letter-spacing:0.5px;padding:2px 7px;border-radius:4px;margin-bottom:4px;}
+.b-li{background:rgba(10,102,194,0.25);color:#5A9EE8;}
+.b-em{background:rgba(212,168,67,0.2);color:var(--gold-lt);}
+.b-wa{background:rgba(37,211,102,0.2);color:#25D366;}
+.b-ev{background:rgba(212,168,67,0.15);color:var(--gold);}
+.b-yt{background:rgba(255,60,60,0.2);color:#FF6060;}
+.b-pr{background:rgba(150,100,220,0.2);color:#C090FF;}
+.cal-txt{font-size:11px;color:var(--muted);line-height:1.5;margin-bottom:5px;}
+
+/* ── OUTREACH ── */
+.out-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:24px;}
+.out-card{
+  background:var(--card-bg);border:1px solid rgba(255,255,255,0.05);
+  border-radius:20px;padding:28px;transition:all 0.4s;position:relative;overflow:hidden;
+}
+.out-card::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--mint),var(--gold-lt));
+  transform:scaleX(0);transform-origin:right;transition:transform 0.4s;
+}
+.out-card:hover::after{transform:scaleX(1);}
+.out-card:hover{transform:translateY(-6px);border-color:var(--border);}
+.out-num{
+  font-family:'DM Mono',monospace;font-size:11px;color:var(--mint);
+  background:rgba(31,190,126,0.08);border:1px solid var(--border);
+  padding:4px 10px;border-radius:6px;display:inline-block;margin-bottom:14px;
+}
+.out-icon{font-size:32px;margin-bottom:12px;display:block;}
+.out-tag{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:12px;display:block;}
+.out-title{font-weight:700;font-size:18px;color:var(--white);margin-bottom:10px;}
+.out-desc{font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:16px;}
+.out-steps{display:flex;flex-direction:column;gap:7px;}
+.out-step{font-size:13px;color:rgba(232,240,236,0.7);display:flex;gap:10px;line-height:1.5;}
+.out-step::before{content:'→';color:var(--mint);flex-shrink:0;}
+
+/* ── TEMPLATES ── */
+.tmpl-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;}
+.t-btn{
+  padding:10px 20px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;
+  border:1px solid rgba(255,255,255,0.1);background:transparent;color:var(--muted);
+  transition:all 0.3s;
+}
+.t-btn:hover{border-color:var(--mint);color:var(--mint);}
+.t-btn.on{background:var(--mint);border-color:var(--mint);color:var(--bg);}
+.tmpl-box{
+  background:var(--card-bg);border:1px solid rgba(255,255,255,0.06);
+  border-left:3px solid var(--mint);border-radius:16px;padding:28px 32px;
+  display:none;animation:pop 0.4s ease;
+}
+.tmpl-box.on{display:block;}
+@keyframes pop{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.t-chan{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--mint);font-weight:700;margin-bottom:16px;display:block;}
+.t-text{font-size:14px;line-height:1.9;color:rgba(232,240,236,0.75);white-space:pre-line;}
+.t-text em{color:var(--gold-lt);font-style:normal;font-weight:700;}
+
+/* ── KPI ── */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:18px;}
+.kpi{
+  background:var(--card-bg);border:1px solid rgba(255,255,255,0.05);
+  border-radius:16px;padding:26px 20px;text-align:center;transition:all 0.3s;
+}
+.kpi:hover{background:rgba(31,190,126,0.06);border-color:var(--border);transform:scale(1.04);}
+.kpi-val{font-family:'Fraunces',serif;font-size:36px;font-weight:700;color:var(--mint);}
+.kpi-lbl{font-size:13px;color:var(--muted);margin-top:6px;}
+.kpi-sub{font-size:11px;color:rgba(212,168,67,0.5);margin-top:4px;}
+
+/* ── FOOTER ── */
+.footer{border-top:1px solid rgba(255,255,255,0.05);padding:40px 0;margin-top:60px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;}
+.f-brand{font-family:'Fraunces',serif;font-size:22px;color:var(--white);}
+.f-brand span{color:var(--mint);}
+.f-note{font-size:12px;color:rgba(255,255,255,0.25);max-width:480px;line-height:1.6;}
+
+/* ── REVEAL ── */
+.rev{opacity:0;transform:translateY(36px);transition:all 0.7s ease;}
+.rev.in{opacity:1;transform:translateY(0);}
+
+@media(max-width:900px){.dir-grid{grid-template-columns:1fr 1fr;}.plat-row{grid-template-columns:1fr;}.plat-content{grid-template-columns:1fr;}}
+@media(max-width:600px){.wrapper{padding:0 20px;}.dir-grid{grid-template-columns:1fr;}.pill-row{gap:12px;}.cal{display:none;}}
+</style>
+</head>
+<body>
+
+<!-- TOP NAV -->
+<nav class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">Prachay <span>ICD</span> Campaign</div>
+    <div class="nav-links">
+      <button class="nav-link" onclick="go('platforms')">Platforms</button>
+      <button class="nav-link" onclick="go('funnel')">Flow</button>
+      <button class="nav-link" onclick="go('calendar')">Calendar</button>
+      <button class="nav-link" onclick="go('outreach')">Outreach</button>
+      <button class="nav-link" onclick="go('templates')">Templates</button>
+      <button class="nav-link" onclick="go('kpis')">KPIs</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="wrapper">
+    <div class="badge"><span class="badge-pulse"></span>Campaign Directory 2026</div>
+    <h1 class="hero-title">
+      <span class="t1">Inter-Corporate</span>
+      <span class="t2">Deposits (ICD)</span>
+    </h1>
+    <p class="hero-desc">A complete B2B social media & outreach playbook to acquire corporate treasuries, CFOs, and business owners deploying short-term surplus capital with Prachay Group.</p>
+    <div class="pill-row">
+      <div class="pill"><span class="pill-val">Higher</span><span class="pill-key">Returns vs Bank FD</span></div>
+      <div class="pill"><span class="pill-val">Flexible</span><span class="pill-key">Short-Term Tenure</span></div>
+      <div class="pill"><span class="pill-val">6</span><span class="pill-key">Campaign Channels</span></div>
+      <div class="pill"><span class="pill-val">12</span><span class="pill-key">Unique Outreach Ideas</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── DIRECTORY ── -->
+<div class="wrapper">
+  <div class="dir-grid rev">
+    <button class="dir-btn" onclick="go('personas')"><span class="dir-num">01</span><span class="dir-title">Target Personas</span><span class="dir-sub">CFOs · Treasurers · Business Owners</span><span class="dir-arr">→</span></button>
+    <button class="dir-btn" onclick="go('platforms')"><span class="dir-num">02</span><span class="dir-title">Platform Strategy</span><span class="dir-sub">LinkedIn · Email · WhatsApp · Events</span><span class="dir-arr">→</span></button>
+    <button class="dir-btn" onclick="go('funnel')"><span class="dir-num">03</span><span class="dir-title">Campaign Flow</span><span class="dir-sub">Awareness → Qualify → Close</span><span class="dir-arr">→</span></button>
+    <button class="dir-btn" onclick="go('calendar')"><span class="dir-num">04</span><span class="dir-title">Content Calendar</span><span class="dir-sub">Weekly B2B posting schedule</span><span class="dir-arr">→</span></button>
+    <button class="dir-btn" onclick="go('outreach')"><span class="dir-num">05</span><span class="dir-title">12 Unique Outreach Ideas</span><span class="dir-sub">Creative ways to reach genuine corporates</span><span class="dir-arr">→</span></button>
+    <button class="dir-btn" onclick="go('templates')"><span class="dir-num">06</span><span class="dir-title">Message Templates</span><span class="dir-sub">CFO pitch · Email · WhatsApp · CA</span><span class="dir-arr">→</span></button>
+  </div>
+</div>
+
+<!-- ── 01 PERSONAS ── -->
+<section class="section" id="personas">
+  <div class="wrapper">
+    <div class="s-label rev">01 — Target Personas</div>
+    <div class="s-title rev">Who We <span>Target</span> for ICD</div>
+    <div class="persona-grid">
+
+      <div class="persona rev">
+        <div class="p-icon">🏢</div>
+        <div class="p-label">Primary Target</div>
+        <div class="p-title">CFOs & Finance Directors</div>
+        <div class="p-desc">Finance heads of mid-to-large companies with ₹1Cr+ idle surplus sitting in low-yield current accounts or liquid funds.</div>
+        <div class="p-points">
+          <div class="p-pt">Companies with ₹50Cr–₹500Cr annual turnover</div>
+          <div class="p-pt">Pain: Treasury earning sub-5% in liquid funds</div>
+          <div class="p-pt">ICD appeal: Better yield, fixed, short-term, flexible</div>
+          <div class="p-pt">Where: LinkedIn, CFO forums, CII Pune, trade events</div>
+        </div>
+      </div>
+
+      <div class="persona rev">
+        <div class="p-icon">👔</div>
+        <div class="p-label">Decision Maker</div>
+        <div class="p-title">Business Owners & Promoters</div>
+        <div class="p-desc">Promoters of profitable SMEs and family businesses who accumulate surplus profits between capex cycles and need short-term deployment.</div>
+        <div class="p-points">
+          <div class="p-pt">Businesses in real estate, manufacturing, trading, IT</div>
+          <div class="p-pt">Pain: Surplus profit sitting idle in low-return accounts</div>
+          <div class="p-pt">ICD appeal: Higher return, quick access, no market risk</div>
+          <div class="p-pt">Where: MCCIA, CREDAI, CA referrals, WhatsApp groups</div>
+        </div>
+      </div>
+
+      <div class="persona rev">
+        <div class="p-icon">📊</div>
+        <div class="p-label">Institutional</div>
+        <div class="p-title">Treasury Managers</div>
+        <div class="p-desc">Treasury teams at corporates, NBFCs, and cooperative banks looking to optimise short-term cash placement beyond T-bills and liquid mutual funds.</div>
+        <div class="p-points">
+          <div class="p-pt">Companies with dedicated treasury functions</div>
+          <div class="p-pt">Pain: Regulatory cap on liquid fund investments</div>
+          <div class="p-pt">ICD appeal: Diversified, yield-enhancing instrument</div>
+          <div class="p-pt">Where: FICCI, banking conferences, RBI-regulated entity networks</div>
+        </div>
+      </div>
+
+      <div class="persona rev">
+        <div class="p-icon">⚖️</div>
+        <div class="p-label">Key Referral Partner</div>
+        <div class="p-title">Chartered Accountants (CAs)</div>
+        <div class="p-desc">CAs who file corporate tax returns know exactly which clients have surplus funds post-advance-tax payments and pre-dividend declarations.</div>
+        <div class="p-points">
+          <div class="p-pt">CAs with 50+ active corporate clients</div>
+          <div class="p-pt">Post-advance-tax season (March, June, Sep, Dec) is peak</div>
+          <div class="p-pt">ICD appeal: Legitimate, well-structured, tax-efficient option</div>
+          <div class="p-pt">Where: ICAI chapter meets, CA WhatsApp groups, referral program</div>
+        </div>
+      </div>
+
+      <div class="persona rev">
+        <div class="p-icon">🏗️</div>
+        <div class="p-label">Sector Specific</div>
+        <div class="p-title">Real Estate Developers</div>
+        <div class="p-desc">Developers who receive large project advances between construction phases — they need short-term parking for 1–12 months at strong yields.</div>
+        <div class="p-points">
+          <div class="p-pt">CREDAI member developers in Pune, Mumbai, Hyderabad</div>
+          <div class="p-pt">Pain: Collection advances sitting idle pre-construction</div>
+          <div class="p-pt">ICD appeal: Prachay understands real estate — natural partner</div>
+          <div class="p-pt">Where: CREDAI events, real estate lawyer networks, direct outreach</div>
+        </div>
+      </div>
+
+      <div class="persona rev">
+        <div class="p-icon">👨‍👩‍👧‍👦</div>
+        <div class="p-label">Wealth Segment</div>
+        <div class="p-title">Family Offices</div>
+        <div class="p-desc">Multi-generation family offices managing ₹50Cr+ that need short-term fixed-income deployment as part of their overall asset allocation strategy.</div>
+        <div class="p-points">
+          <div class="p-pt">3rd–4th generation family wealth — systematic allocation</div>
+          <div class="p-pt">Pain: Seeking yield above G-Secs without equity risk</div>
+          <div class="p-pt">ICD appeal: Known counterparty, RBI-regulated NBFC</div>
+          <div class="p-pt">Where: Family office associations, wealth manager networks</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── 02 PLATFORMS ── -->
+<section class="section" id="platforms" style="background:rgba(255,255,255,0.01);border-top:1px solid rgba(255,255,255,0.04);">
+  <div class="wrapper">
+    <div class="s-label rev">02 — Platform Strategy</div>
+    <div class="s-title rev">Where ICD <span>Leads Live</span></div>
+    <div class="plat-stack">
+
+      <div class="plat-row plat-li rev">
+        <div class="plat-label">
+          <div class="plat-emoji">💼</div>
+          <div class="plat-name">LinkedIn</div>
+          <div class="plat-role">Primary B2B Engine</div>
+          <div class="plat-freq">5 posts/week · 25 connects/day</div>
+        </div>
+        <div class="plat-content">
+          <div class="plat-item"><strong>Lead Gen Forms</strong>Download ICD Product Sheet — auto-fills from LinkedIn profile</div>
+          <div class="plat-item"><strong>Sponsored Posts</strong>Target CFO/Finance Director/VP Finance at 50–500 employee cos</div>
+          <div class="plat-item"><strong>Thought Leadership</strong>Girish Lakhotiya articles: "Optimising Corporate Treasury in 2026"</div>
+          <div class="plat-item"><strong>LinkedIn Events</strong>Monthly "CFO Roundtable" virtual event — 30-min format</div>
+          <div class="plat-item"><strong>InMail Sequence</strong>3-touch: Connect → Insight share → ICD pitch with ROI data</div>
+          <div class="plat-item"><strong>Company Page</strong>Case studies, product explainers, testimonial posts weekly</div>
+        </div>
+      </div>
+
+      <div class="plat-row plat-email rev">
+        <div class="plat-label">
+          <div class="plat-emoji">📧</div>
+          <div class="plat-name">Email Marketing</div>
+          <div class="plat-role">Nurture & Convert</div>
+          <div class="plat-freq">2 campaigns/week + drip sequences</div>
+        </div>
+        <div class="plat-content">
+          <div class="plat-item"><strong>Drip Series</strong>6-email "Smarter Treasury" series targeting CFOs over 14 days</div>
+          <div class="plat-item"><strong>Monthly Newsletter</strong>"Prachay Treasury Insights" — rates, RBI updates, ICD spotlight</div>
+          <div class="plat-item"><strong>Post-Event Follow-up</strong>Email + ROI sheet within 2 hrs of any event or webinar</div>
+          <div class="plat-item"><strong>Advance Tax Trigger</strong>Campaign bursts on 15th Mar/Jun/Sep/Dec when corps have surplus</div>
+          <div class="plat-item"><strong>Personalisation</strong>Dynamic content by sector: Real estate / IT / Manufacturing</div>
+          <div class="plat-item"><strong>Re-engagement</strong>90-day lapsed lead reactivation with new rate/term offer</div>
+        </div>
+      </div>
+
+      <div class="plat-row plat-wa rev">
+        <div class="plat-label">
+          <div class="plat-emoji">💬</div>
+          <div class="plat-name">WhatsApp</div>
+          <div class="plat-role">Direct & Fast Conversion</div>
+          <div class="plat-freq">3 broadcasts/week + 60s bot response</div>
+        </div>
+        <div class="plat-content">
+          <div class="plat-item"><strong>Segmented Lists</strong>CFO list / Business Owner list / CA partner list — separate messaging</div>
+          <div class="plat-item"><strong>Bot Trigger</strong>Reply "ICD" → instant product sheet + RM callback arranged</div>
+          <div class="plat-item"><strong>Rate Updates</strong>Broadcast when ICD rates change — triggers re-investment conversations</div>
+          <div class="plat-item"><strong>Maturity Alerts</strong>Remind corporate depositors 15 days before ICD maturity for renewal</div>
+          <div class="plat-item"><strong>Status Strategy</strong>Daily treasury tip on WhatsApp Status — non-intrusive visibility</div>
+          <div class="plat-item"><strong>CA Groups</strong>Share rate cards in CA WhatsApp groups with permission — high ROI</div>
+        </div>
+      </div>
+
+      <div class="plat-row plat-off rev">
+        <div class="plat-label">
+          <div class="plat-emoji">🤝</div>
+          <div class="plat-name">Events & Roadshows</div>
+          <div class="plat-role">Trust-Building & Closing</div>
+          <div class="plat-freq">Monthly Pune + Quarterly other cities</div>
+        </div>
+        <div class="plat-content">
+          <div class="plat-item"><strong>CFO Breakfast</strong>Exclusive invite-only breakfast with 15–20 CFOs — high-trust format</div>
+          <div class="plat-item"><strong>Industry Summits</strong>Sponsor or speak at MCCIA, CII, FICCI finance events in Pune</div>
+          <div class="plat-item"><strong>Roadshows</strong>Quarterly: Mumbai, Hyderabad, Bangalore CFO meetups</div>
+          <div class="plat-item"><strong>CA Seminars</strong>Monthly briefing for CA partners on ICD product + compliance</div>
+          <div class="plat-item"><strong>Webinars</strong>"Optimising Corporate Treasury Returns" — monthly, Zoom-based</div>
+          <div class="plat-item"><strong>1:1 Meetings</strong>RM visits top 20 target corporates in Pune per month</div>
+        </div>
+      </div>
+
+      <div class="plat-row plat-yt rev">
+        <div class="plat-label">
+          <div class="plat-emoji">▶️</div>
+          <div class="plat-name">YouTube & Video</div>
+          <div class="plat-role">Education & SEO</div>
+          <div class="plat-freq">2 videos/month + Shorts</div>
+        </div>
+        <div class="plat-content">
+          <div class="plat-item"><strong>Explainer Video</strong>"What is an ICD? Complete Corporate Treasury Guide"</div>
+          <div class="plat-item"><strong>Comparison Video</strong>"ICD vs Liquid Mutual Fund vs Fixed Deposit — Which wins?"</div>
+          <div class="plat-item"><strong>Case Study Video</strong>"How [Sector] company optimised ₹5Cr treasury with Prachay ICD"</div>
+          <div class="plat-item"><strong>YouTube Shorts</strong>Daily 60s: Treasury tips, rate comparisons, compliance insights</div>
+          <div class="plat-item"><strong>Webinar Replays</strong>CFO webinar recordings drive ongoing inbound leads</div>
+          <div class="plat-item"><strong>LinkedIn Video</strong>Repurpose YouTube content as native LinkedIn video posts</div>
+        </div>
+      </div>
+
+      <div class="plat-row plat-g rev">
+        <div class="plat-label">
+          <div class="plat-emoji">🔍</div>
+          <div class="plat-name">Google Ads & SEO</div>
+          <div class="plat-role">High-Intent Search Capture</div>
+          <div class="plat-freq">Always-on paid + organic SEO</div>
+        </div>
+        <div class="plat-content">
+          <div class="plat-item"><strong>Search Keywords</strong>"inter corporate deposit India", "ICD investment NBFC", "short term corporate deposit"</div>
+          <div class="plat-item"><strong>Display Ads</strong>Contextual ads on Economic Times, Business Standard, Moneycontrol</div>
+          <div class="plat-item"><strong>SEO Content</strong>"Best Inter-Corporate Deposit Options in India 2026" — rank organically</div>
+          <div class="plat-item"><strong>Retargeting</strong>Follow all website visitors with ICD product ads across web</div>
+          <div class="plat-item"><strong>Geo-Targeting</strong>Pune, Mumbai, Hyderabad, Bangalore, Delhi NCR corporates</div>
+          <div class="plat-item"><strong>YouTube Pre-roll</strong>15s ad on finance/business content: "Earning less than 7%? See Prachay ICD"</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── 03 CAMPAIGN FLOW ── -->
+<section class="section" id="funnel">
+  <div class="wrapper">
+    <div class="s-label rev">03 — Campaign Flow</div>
+    <div class="s-title rev">The ICD <span>Lead Funnel</span></div>
+    <div class="funnel">
+
+      <div class="f-step rev">
+        <div class="f-num-col"><div class="f-circle">1</div></div>
+        <div class="f-body">
+          <span class="f-tag" style="background:rgba(10,102,194,0.12);color:#5A9EE8;">💼 LinkedIn + Google</span>
+          <div class="f-title">Awareness — Enter the CFO's World</div>
+          <div class="f-desc">Decision-makers see Prachay for the first time via targeted content, search ads, or peer recommendations at industry events.</div>
+          <div class="f-items">
+            <div class="f-item"><span class="f-arrow">◆</span>LinkedIn Sponsored Post: "Your corporate treasury deserves better than 5%. See how Prachay ICD delivers more." — targeted to CFO title</div>
+            <div class="f-item"><span class="f-arrow">◆</span>Google Search: "inter corporate deposit rates India" → Prachay ICD landing page with rate calculator</div>
+            <div class="f-item"><span class="f-arrow">◆</span>YouTube Pre-roll on Business Standard / ET Now videos: 15s hook "Short-term surplus? Earn more with Prachay ICD"</div>
+            <div class="f-item"><span class="f-arrow">◆</span>Founder article on LinkedIn: "The ₹10,000 Crore opportunity India's CFOs are missing in their treasury"</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="f-step rev">
+        <div class="f-num-col"><div class="f-circle">2</div></div>
+        <div class="f-body">
+          <span class="f-tag" style="background:rgba(212,168,67,0.12);color:var(--gold-lt);">📧 Email + LinkedIn</span>
+          <div class="f-title">Interest — Hook with Insight</div>
+          <div class="f-desc">The CFO or finance head engages — clicks an ad, reads an article, or visits the website. Interest is captured through valuable content, not a hard sell.</div>
+          <div class="f-items">
+            <div class="f-item"><span class="f-arrow">◆</span>LinkedIn article: "3 ways Indian CFOs are beating liquid fund returns in 2026 — legally" — gated download captures email</div>
+            <div class="f-item"><span class="f-arrow">◆</span>Landing page ICD Rate Calculator: "Enter your surplus amount and tenure — see your daily earnings" → form capture</div>
+            <div class="f-item"><span class="f-arrow">◆</span>Webinar registration: "Optimising Corporate Treasury Returns: ICD vs Liquid Funds vs FD" — CFO-targeted invite</div>
+            <div class="f-item"><span class="f-arrow">◆</span>WhatsApp Click-to-Chat: "Type ICD to receive our corporate rate card and product note instantly"</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="f-step rev">
+        <div class="f-num-col"><div class="f-circle">3</div></div>
+        <div class="f-body">
+          <span class="f-tag" style="background:rgba(37,211,102,0.12);color:#25D366;">💬 Email Drip + WhatsApp</span>
+          <div class="f-title">Nurture — Build Confidence</div>
+          <div class="f-desc">Corporate decision-makers require more trust-building than retail investors. A structured drip educates, de-risks, and keeps Prachay top-of-mind.</div>
+          <div class="f-items">
+            <div class="f-item"><span class="f-arrow">◆</span>Day 1 Email: "Welcome + ICD Product Note + Prachay NBFC credentials (RBI registration, CRISIL rating, track record)"</div>
+            <div class="f-item"><span class="f-arrow">◆</span>Day 3 WhatsApp: 2-min video — "How ICD works at Prachay — step by step, from deposit to maturity"</div>
+            <div class="f-item"><span class="f-arrow">◆</span>Day 5 Email: "Case Study — How a Pune manufacturing company deployed ₹3Cr surplus at [X]% for 180 days"</div>
+            <div class="f-item"><span class="f-arrow">◆</span>Day 8 LinkedIn Retargeting: CRISIL-rated, RBI-registered trust signals — for compliance-conscious finance teams</div>
+            <div class="f-item"><span class="f-arrow">◆</span>Day 11 WhatsApp: "You're invited — exclusive CFO Breakfast hosted by Prachay leadership next Friday"</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="f-step rev">
+        <div class="f-num-col"><div class="f-circle">4</div></div>
+        <div class="f-body">
+          <span class="f-tag" style="background:rgba(150,100,220,0.12);color:#C090FF;">📞 RM + In-Person</span>
+          <div class="f-title">Qualify — Meet the Decision-Maker</div>
+          <div class="f-desc">RM engages directly. ICD is a high-ticket B2B product — qualification requires a real conversation, not just a form submission.</div>
+          <div class="f-items">
+            <div class="f-item"><span class="f-arrow">◆</span>RM calls within 24 hours of any lead form submission — asks 4 qualification questions: Company size, surplus amount, tenure, decision timeline</div>
+            <div class="f-item"><span class="f-arrow">◆</span>Personalized ICD proposal prepared: "For ₹[X]Cr over [Y] months at Prachay, here is your projected income vs alternatives"</div>
+            <div class="f-item"><span class="f-arrow">◆</span>Hot leads: 1:1 meeting at Prachay office (14th floor, Next Gen Avenue) or prospect's corporate office</div>
+            <div class="f-item"><span class="f-arrow">◆</span>CA partner introduced if prospect prefers CA-routed transaction — removes friction for compliance-sensitive clients</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="f-step rev">
+        <div class="f-num-col"><div class="f-circle">5</div></div>
+        <div class="f-body">
+          <span class="f-tag" style="background:rgba(212,168,67,0.15);color:var(--gold);">⚡ Legal + Ops</span>
+          <div class="f-title">Convert — Execute & Onboard</div>
+          <div class="f-desc">Smooth documentation, board resolution support, and fast turnaround convert a qualified corporate into a confirmed ICD depositor.</div>
+          <div class="f-items">
+            <div class="f-item"><span class="f-arrow">◆</span>ICD Agreement drafted and shared within 48 hours of verbal confirmation — legal team on standby</div>
+            <div class="f-item"><span class="f-arrow">◆</span>Prachay ops team assists with board resolution template (required under Companies Act Section 186)</div>
+            <div class="f-item"><span class="f-arrow">◆</span>Funds received → Welcome kit dispatched: signed agreement, interest schedule, RM contact details</div>
+            <div class="f-item"><span class="f-arrow">◆</span>Interest credited on schedule with automated alert to CFO/Finance head on each payment date</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="f-step rev">
+        <div class="f-num-col"><div class="f-circle">6</div></div>
+        <div class="f-body">
+          <span class="f-tag" style="background:rgba(31,190,126,0.15);color:var(--mint);">🔄 Renewal + Referral</span>
+          <div class="f-title">Retain & Multiply — Renew and Grow</div>
+          <div class="f-desc">A corporate that renews ICD is worth 10x a one-time deposit. Systematic relationship management and referral requests build compounding pipeline.</div>
+          <div class="f-items">
+            <div class="f-item"><span class="f-arrow">◆</span>30-day pre-maturity renewal offer: WhatsApp + Email + RM call — higher rate for loyal depositors</div>
+            <div class="f-item"><span class="f-arrow">◆</span>Quarterly RM check-in call with CFO — update on Prachay business health and new rate options</div>
+            <div class="f-item"><span class="f-arrow">◆</span>Referral ask post-first interest payment: "Do you know another CFO/business owner who'd benefit from Prachay ICD?"</div>
+            <div class="f-item"><span class="f-arrow">◆</span>Cross-sell: ICD depositors introduced to Prachay Bonds (NCD) for their personal/promoter portfolio</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── 04 CALENDAR ── -->
+<section class="section" id="calendar" style="background:rgba(255,255,255,0.01);border-top:1px solid rgba(255,255,255,0.04);">
+  <div class="wrapper">
+    <div class="s-label rev">04 — Content Calendar</div>
+    <div class="s-title rev">Weekly <span>B2B Posting Plan</span></div>
+    <div class="cal rev">
+      <div class="cal-hd">Mon</div><div class="cal-hd">Tue</div><div class="cal-hd">Wed</div><div class="cal-hd">Thu</div><div class="cal-hd">Fri</div><div class="cal-hd">Sat</div><div class="cal-hd">Sun</div>
+
+      <div class="cal-cell hot"><span class="badg b-li">LinkedIn</span><div class="cal-txt">Market pulse: RBI rate environment & what it means for corporate treasury</div><span class="badg b-wa">WhatsApp</span><div class="cal-txt">Rate card update to CA partners</div></div>
+      <div class="cal-cell"><span class="badg b-em">Email</span><div class="cal-txt">Drip Day 1: Welcome + ICD product note + NBFC credentials</div><span class="badg b-li">LinkedIn</span><div class="cal-txt">Poll: "How does your company park short-term surplus?"</div></div>
+      <div class="cal-cell hot"><span class="badg b-yt">YouTube</span><div class="cal-txt">Video: "ICD vs Liquid Mutual Fund — complete comparison"</div><span class="badg b-li">LinkedIn</span><div class="cal-txt">Article: "Optimising treasury in a volatile rate environment"</div></div>
+      <div class="cal-cell"><span class="badg b-wa">WhatsApp</span><div class="cal-txt">Broadcast: Finance tip — advance tax surplus deployment</div><span class="badg b-em">Email</span><div class="cal-txt">Drip Day 3: Case study — corporate surplus success story</div></div>
+      <div class="cal-cell hot"><span class="badg b-li">LinkedIn</span><div class="cal-txt">Lead Gen Ad: "Get ICD rate card for your company" — CFO targeted</div><span class="badg b-pr">PR</span><div class="cal-txt">Media: Monthly quote/comment to ET/Mint on rates</div></div>
+      <div class="cal-cell"><span class="badg b-ev">Event</span><div class="cal-txt">CFO Breakfast / Webinar (monthly) — post-event follow-up emails same day</div></div>
+      <div class="cal-cell"><span class="badg b-li">LinkedIn</span><div class="cal-txt">Weekly digest: "Prachay Treasury Watch" — industry news + ICD rates</div></div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;margin-top:36px;" class="rev">
+      <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:14px;padding:22px;">
+        <div style="font-size:12px;color:var(--mint);font-weight:700;letter-spacing:1px;margin-bottom:12px;">📌 ICD CONTENT PILLARS</div>
+        <div style="font-size:13px;color:var(--muted);line-height:2.1;">🏦 Treasury Education<br>📈 Rate Comparisons<br>⚖️ Compliance & Legality<br>🧮 ROI / Calculator Posts<br>✅ Trust & Credentials<br>🤝 Case Studies</div>
+      </div>
+      <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:14px;padding:22px;">
+        <div style="font-size:12px;color:var(--mint);font-weight:700;letter-spacing:1px;margin-bottom:12px;">⏰ BEST TIMES (B2B)</div>
+        <div style="font-size:13px;color:var(--muted);line-height:2.1;">LinkedIn: Tue–Thu 8–9am & 5–7pm<br>Email: Tue 7am & Thu 10am<br>WhatsApp: Mon & Thu 9–11am<br>YouTube: Wed & Sat 11am<br>Events: Fri 8–10am breakfast</div>
+      </div>
+      <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:14px;padding:22px;">
+        <div style="font-size:12px;color:var(--mint);font-weight:700;letter-spacing:1px;margin-bottom:12px;">⚡ TRIGGER CAMPAIGNS</div>
+        <div style="font-size:13px;color:var(--muted);line-height:2.1;">Advance Tax Dates (15th Mar/Jun/Sep/Dec)<br>RBI Rate Decisions<br>Quarter-end treasury rebalancing<br>Financial year close (March)<br>Post-dividend declarations</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 05 OUTREACH ── -->
+<section class="section" id="outreach">
+  <div class="wrapper">
+    <div class="s-label rev">05 — Unique Outreach</div>
+    <div class="s-title rev">12 <span>Creative Ways</span><br>to Reach Corporate Depositors</div>
+    <div class="out-grid">
+
+      <div class="out-card rev">
+        <div class="out-num">01</div>
+        <span class="out-icon">🧮</span>
+        <span class="out-tag">Viral Tool</span>
+        <div class="out-title">ICD Treasury Calculator</div>
+        <div class="out-desc">A CFO-facing web calculator: "Enter your surplus amount and tenure — instantly see daily earnings vs liquid fund vs FD." CFOs share these tools in their finance teams.</div>
+        <div class="out-steps">
+          <div class="out-step">Embed on Prachay website + share as LinkedIn carousel</div>
+          <div class="out-step">"Email me the comparison report" captures lead with high intent</div>
+          <div class="out-step">CA partners share with clients as a value-add tool</div>
+          <div class="out-step">Gate the PDF report version — collects company name + phone</div>
+        </div>
+      </div>
+
+      <div class="out-card rev">
+        <div class="out-icon">☕</div>
+        <span class="out-tag">Exclusive Access</span>
+        <div class="out-title">CFO Breakfast Club (Monthly)</div>
+        <div class="out-desc">Invite-only breakfast with 15–20 CFOs. No hard selling — pure peer networking + Prachay as the host. Host credibility transfers to product credibility.</div>
+        <div class="out-steps">
+          <div class="out-step">Venue: Premium hotel or Prachay's own office boardroom (14th floor)</div>
+          <div class="out-step">Agenda: 20-min panel discussion + networking — Prachay hosts</div>
+          <div class="out-step">Topic: "Indian corporate treasury — where are CFOs investing in 2026?"</div>
+          <div class="out-step">Follow-up 1:1 meeting requests within 24 hours of event</div>
+        </div>
+      </div>
+
+      <div class="out-card rev">
+        <div class="out-icon">📅</div>
+        <span class="out-tag">Timing-Based</span>
+        <div class="out-title">Advance Tax Date Campaign</div>
+        <div class="out-desc">Corporates pay advance tax on 15th Mar/Jun/Sep/Dec. Post-payment, they often have confirmed surplus for the quarter. This is the single best ICD conversion window.</div>
+        <div class="out-steps">
+          <div class="out-step">Campaign burst 5 days before each advance tax date via email + LinkedIn</div>
+          <div class="out-step">Message: "Advance tax paid? Here's how to put the rest of your surplus to work"</div>
+          <div class="out-step">RM team on high-alert for 2 weeks post-advance-tax date for follow-ups</div>
+          <div class="out-step">CA partners brief their clients on Prachay ICD during this window</div>
+        </div>
+      </div>
+
+      <div class="out-card rev">
+        <div class="out-icon">🏛️</div>
+        <span class="out-tag">Association Play</span>
+        <div class="out-title">MCCIA / CII / CREDAI Sponsorships</div>
+        <div class="out-desc">Pune's top industry associations host events attended by exactly the CFOs, promoters, and directors Prachay needs. Sponsorship = room full of decision-makers.</div>
+        <div class="out-steps">
+          <div class="out-step">Sponsor 1–2 MCCIA finance events per quarter — branded presence</div>
+          <div class="out-step">Secure 10-minute "Prachay Insights" speaking slot at events</div>
+          <div class="out-step">Collect visiting cards + consent → RM follow-up within 48 hours</div>
+          <div class="out-step">CREDAI Pune: pitch ICD to real estate developer members specifically</div>
+        </div>
+      </div>
+
+      <div class="out-card rev">
+        <div class="out-icon">⚖️</div>
+        <span class="out-tag">CA Network</span>
+        <div class="out-title">ICAI Chapter Partnership Program</div>
+        <div class="out-desc">CAs know which clients have surplus. A structured CA partnership — with training, materials, and commission — turns 50 CAs into 50 business development officers.</div>
+        <div class="out-steps">
+          <div class="out-step">Partner with ICAI Pune Chapter for a "Treasury Best Practices" CPE seminar</div>
+          <div class="out-step">Prachay presents ICD product + Companies Act 186 compliance guide</div>
+          <div class="out-step">Empanel participating CAs as referral partners with fee structure</div>
+          <div class="out-step">Provide CAs with client-ready ICD comparison sheet and FAQ document</div>
+        </div>
+      </div>
+
+      <div class="out-card rev">
+        <div class="out-icon">🗞️</div>
+        <span class="out-tag">Content SEO</span>
+        <div class="out-title">Rank for "ICD India" on Google</div>
+        <div class="out-desc">Very few NBFC websites have strong SEO content on ICDs. A definitive guide will rank quickly and attract high-intent CFOs doing research before making treasury decisions.</div>
+        <div class="out-steps">
+          <div class="out-step">3000+ word guide: "Inter-Corporate Deposits in India — Complete 2026 Guide"</div>
+          <div class="out-step">Cover: legal framework (S.186), rates, eligibility, tax treatment</div>
+          <div class="out-step">Keywords: "ICD deposit rates India", "inter corporate deposit NBFC", "Section 186 ICD"</div>
+          <div class="out-step">Guest post on Business Standard, Economic Times MSME section</div>
+        </div>
+      </div>
+
+      <div class="out-card rev">
+        <div class="out-icon">📊</div>
+        <span class="out-tag">Data-Led</span>
+        <div class="out-title">MCA Director Database Outreach</div>
+        <div class="out-desc">The MCA21 portal lists all Directors of registered companies. Directors of profitable companies with strong balance sheets are prime ICD prospects — legally verifiable targets.</div>
+        <div class="out-steps">
+          <div class="out-step">Filter MCA data: Pune/Maharashtra companies, turnover ₹20Cr+, profitable</div>
+          <div class="out-step">Cross-reference director names on LinkedIn for verified contact</div>
+          <div class="out-step">Personalised LinkedIn outreach referencing their company and sector</div>
+          <div class="out-step">Focus sectors: Manufacturing, real estate, trading, healthcare</div>
+        </div>
+      </div>
+
+      <div class="out-card rev">
+        <div class="out-icon">🎙️</div>
+        <span class="out-tag">Authority</span>
+        <div class="out-title">Business Podcast & Webinar Circuit</div>
+        <div class="out-desc">CFOs listen to finance and business podcasts. Girish Lakhotiya as a regular guest positions Prachay as the thought-leader in NBFC-based corporate treasury solutions.</div>
+        <div class="out-steps">
+          <div class="out-step">Target podcasts: CFO Talks India, The Business Podcast, ET Now Business</div>
+          <div class="out-step">Topic: "Why more Indian companies are using ICD instead of liquid funds"</div>
+          <div class="out-step">Each episode drives finance-literate listeners directly to ICD landing page</div>
+          <div class="out-step">Host Prachay's own LinkedIn Live "CFO Talk" series monthly</div>
+        </div>
+      </div>
+
+      <div class="out-card rev">
+        <div class="out-icon">🏦</div>
+        <span class="out-tag">Bank Network</span>
+        <div class="out-title">Banker & RM Referral Program</div>
+        <div class="out-desc">Bank relationship managers know which companies are sitting on large current account balances. A structured referral arrangement creates an invisible salesforce inside banks.</div>
+        <div class="out-steps">
+          <div class="out-step">Approach RMs at Kotak, HDFC Private, YES Bank, IndusInd in Pune</div>
+          <div class="out-step">Offer referral arrangement: bank RM refers current-account-heavy corporates</div>
+          <div class="out-step">Position ICD as a complement (not competitor) to banking relationship</div>
+          <div class="out-step">Monthly banker appreciation event hosted by Prachay — keeps referrals flowing</div>
+        </div>
+      </div>
+
+      <div class="out-card rev">
+        <div class="out-icon">📦</div>
+        <span class="out-tag">Account-Based</span>
+        <div class="out-title">Account-Based Marketing (ABM) — Top 100 Corporates</div>
+        <div class="out-desc">Build a hand-curated list of 100 Pune/Maharashtra companies with clear surplus signals. Run a fully personalised, multi-touch campaign on each — account-by-account.</div>
+        <div class="out-steps">
+          <div class="out-step">Research: Identify 100 companies using LinkedIn, MCA, news articles for surplus signals</div>
+          <div class="out-step">Personalised ICD proposal: "For [Company Name]'s ₹[X] surplus — here's what Prachay offers"</div>
+          <div class="out-step">Multi-touch: LinkedIn → Email → WhatsApp → RM call → Physical visit</div>
+          <div class="out-step">Close 20–30% of ABM targets = 20–30 high-value ICD accounts per quarter</div>
+        </div>
+      </div>
+
+      <div class="out-card rev">
+        <div class="out-icon">✉️</div>
+        <span class="out-tag">Surprise Factor</span>
+        <div class="out-title">Premium Physical CFO Mailer</div>
+        <div class="out-desc">CFOs receive hundreds of digital messages a day. A premium physical envelope stands out completely. Hand-addressed, signed by Girish — it creates an instant credibility signal.</div>
+        <div class="out-steps">
+          <div class="out-step">Send to top 200 targeted CFOs: premium envelope + personalised letter + ICD product note</div>
+          <div class="out-step">Header: "Your ₹[X]Cr surplus could be earning ₹[Y] more. Here's how." — data from public filings</div>
+          <div class="out-step">Include QR code → ICD rate calculator + "Book a call with our team" CTA</div>
+          <div class="out-step">RM follow-up call 3 days after confirmed delivery — 3–5x better response than cold email</div>
+        </div>
+      </div>
+
+      <div class="out-card rev">
+        <div class="out-icon">🔁</div>
+        <span class="out-tag">Retention Play</span>
+        <div class="out-title">ICD Renewal & Loyalty Rewards</div>
+        <div class="out-desc">A corporate that renews is worth 5x a new deposit. A systematic renewal program with loyalty rates and exclusive benefits makes renewal the obvious choice.</div>
+        <div class="out-steps">
+          <div class="out-step">Renewal offer 30 days pre-maturity: 0.25% higher rate for confirmed renewals</div>
+          <div class="out-step">"Prachay Corporate Club" — exclusive benefits for repeat depositors (early access, priority service)</div>
+          <div class="out-step">Annual corporate investor felicitation event — recognition drives loyalty and referrals</div>
+          <div class="out-step">Cross-sell: ICD clients offered NCD (Prachay Bonds) for promoter personal portfolio</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── 06 TEMPLATES ── -->
+<section class="section" id="templates" style="background:rgba(255,255,255,0.01);border-top:1px solid rgba(255,255,255,0.04);">
+  <div class="wrapper">
+    <div class="s-label rev">06 — Message Templates</div>
+    <div class="s-title rev">Ready-to-Use <span>Scripts</span></div>
+    <div class="tmpl-tabs rev">
+      <button class="t-btn on" onclick="showT('cfo')">CFO LinkedIn DM</button>
+      <button class="t-btn" onclick="showT('email')">Cold Email</button>
+      <button class="t-btn" onclick="showT('wa')">WhatsApp</button>
+      <button class="t-btn" onclick="showT('ca')">CA Partner Pitch</button>
+      <button class="t-btn" onclick="showT('event')">Event Follow-up</button>
+    </div>
+
+    <div class="tmpl-box on" id="t-cfo">
+      <span class="t-chan">💼 LinkedIn DM — CFO / Finance Director</span>
+      <div class="t-text">Hi <em>[First Name]</em>,
+
+Came across your profile and noticed you're heading finance at <em>[Company Name]</em> — impressive track record in <em>[industry]</em>.
+
+I'm <em>[Your Name]</em> from Prachay Group — we're a Pune-based RBI-registered NBFC with ₹271Cr+ in assets, and we work with corporate treasuries across Maharashtra.
+
+One specific product we offer that might be relevant for you: <em>Inter-Corporate Deposits (ICD)</em>.
+
+If your company periodically has surplus funds sitting in a current account or low-yield liquid fund, an ICD with Prachay offers:
+
+→ <em>Returns significantly higher than liquid funds</em>
+→ Flexible tenure: 30 days to 12 months
+→ Governed under Companies Act Section 186 — fully compliant
+→ RBI-registered NBFC counterparty — transparent and regulated
+
+Would a 15-minute call make sense this week? I can share our current rate card and structure a quick comparison for your treasury.
+
+— <em>[Your Name]</em>, Prachay Group</div>
+    </div>
+
+    <div class="tmpl-box" id="t-email">
+      <span class="t-chan">📧 Cold Email — CFO / Head of Finance</span>
+      <div class="t-text">Subject: <em>Is your company's short-term surplus beating 8% p.a.? [Quick question]</em>
+
+Dear <em>[Name]</em>,
+
+I'll keep this short — I know your inbox is busy.
+
+We work with corporate finance teams across Pune and Maharashtra to help them earn meaningfully better returns on short-term treasury surplus.
+
+Our product: <em>Inter-Corporate Deposits (ICD) with Prachay Capital Limited</em> — an RBI-registered NBFC.
+
+Here's why CFOs are choosing it over liquid funds and bank sweeps:
+
+✦ <em>Higher yield</em> than liquid mutual funds or sweep accounts
+✦ Fixed, predictable return — not NAV-dependent
+✦ Fully compliant: Companies Act Section 186 + Board Resolution support provided
+✦ Flexible: 30 days to 12 months tenures available
+✦ Prachay has 15+ years of track record — ₹271Cr+ AUM, CRISIL-rated
+
+If <em>[Company Name]</em> has even ₹50 Lakhs sitting idle between capex cycles or dividend declarations, this is worth a 15-minute conversation.
+
+I've attached our ICD product note and a quick rate comparison. Happy to prepare a personalised return estimate for your specific surplus amount and tenure.
+
+Would <em>[Day]</em> at <em>[Time]</em> work for a brief call?
+
+Warm regards,
+<em>[Your Name]</em>
+Prachay Group | <em>[Phone]</em> | prachay.com</div>
+    </div>
+
+    <div class="tmpl-box" id="t-wa">
+      <span class="t-chan">💬 WhatsApp Broadcast — CA Partners & Corporate Network</span>
+      <div class="t-text">📊 *Prachay ICD — Better Returns for Corporate Surplus*
+
+Hello <em>[Name]</em>,
+
+Quick update from the Prachay treasury desk:
+
+*Inter-Corporate Deposits (ICD) — Now Accepting Corporate Deposits*
+
+If your company has short-term surplus parked in:
+× Current account (earning near zero)
+× Liquid mutual fund (earning ~5–6%)
+
+Consider Prachay ICD instead:
+
+✅ *Higher fixed return* vs liquid funds
+✅ Tenure: 30 days to 12 months (your choice)
+✅ Fully compliant: Companies Act Section 186
+✅ RBI-registered NBFC — regulated, transparent
+✅ Board Resolution template provided by Prachay
+
+🧮 *Reply "ICD" to receive our current rate card and return calculator instantly.*
+
+📞 Or call: <em>[Phone Number]</em>
+🌐 prachay.com
+
+— Team Prachay | Your Finance Partners 🙏</div>
+    </div>
+
+    <div class="tmpl-box" id="t-ca">
+      <span class="t-chan">🤝 CA Partner Pitch — ICAI Chapter / Individual CA</span>
+      <div class="t-text">Dear <em>[CA Name]</em>,
+
+I hope you're well.
+
+I'm reaching out from Prachay Group — you may know us as one of Pune's leading NBFCs (RBI-registered, CRISIL-rated, ₹271Cr+ AUM).
+
+I'd like to discuss our <em>Prachay CA Partner Program</em> for ICD referrals.
+
+*Why this is relevant for your corporate clients:*
+Many of your SME and corporate clients likely have surplus funds at quarter-end or post-advance-tax. Prachay ICD offers a fully compliant, high-yield option that you can recommend with confidence.
+
+*What makes Prachay ICD stand out:*
+→ Returns meaningfully higher than liquid funds and bank sweeps
+→ Companies Act Section 186 compliant — we provide board resolution templates
+→ Tenures from 30 days to 12 months — highly flexible for treasury needs
+→ Prachay handles documentation, legal review, and all operational steps
+
+*What we offer CA partners:*
+→ Referral fee on every successful ICD placed through your referral
+→ Ready-made client presentation + FAQ document
+→ Quarterly product briefings and rate updates
+→ Priority RM support for your clients
+
+Would you be open to a 20-minute briefing call? I'd love to walk you through the product and discuss the partnership structure.
+
+Looking forward to connecting.
+<em>[Your Name]</em>, Prachay Group | <em>[Phone]</em></div>
+    </div>
+
+    <div class="tmpl-box" id="t-event">
+      <span class="t-chan">📩 Post-Event Follow-up — CFO Breakfast / Conference</span>
+      <div class="t-text">Subject: <em>Great meeting you at [Event Name] — ICD rate card as promised</em>
+
+Dear <em>[Name]</em>,
+
+It was a pleasure meeting you at <em>[Event Name]</em> today — your perspective on <em>[topic discussed]</em> was genuinely insightful.
+
+As promised, I'm sharing our <em>Prachay ICD product note and current rate card</em> (attached).
+
+A quick recap of what we discussed:
+
+→ Prachay Capital Limited is an RBI-registered NBFC with CRISIL rating and ₹271Cr+ in managed assets
+→ Our ICD product offers corporates a significantly better return on short-term surplus vs liquid funds
+→ Tenures from 30 days to 12 months; fully compliant under Companies Act Section 186
+→ We provide board resolution templates and full documentation support
+
+Based on your company's profile, I'd like to prepare a <em>personalised ICD return estimate</em> for a sample surplus amount and tenure of your choice — no commitment, just numbers to share with your finance team.
+
+Would a 20-minute call later this week or early next week suit you?
+
+Warm regards,
+<em>[Your Name]</em>
+Prachay Group | <em>[Phone]</em> | prachay.com</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── KPIs ── -->
+<section class="section" id="kpis">
+  <div class="wrapper">
+    <div class="s-label rev">07 — Campaign KPIs</div>
+    <div class="s-title rev">Measure <span>What Matters</span></div>
+    <div class="kpi-grid rev">
+      <div class="kpi"><div class="kpi-val">200+</div><div class="kpi-lbl">Qualified Leads / Quarter</div><div class="kpi-sub">Corporate treasuries</div></div>
+      <div class="kpi"><div class="kpi-val">5K+</div><div class="kpi-lbl">LinkedIn Followers</div><div class="kpi-sub">Finance professionals</div></div>
+      <div class="kpi"><div class="kpi-val">35%</div><div class="kpi-lbl">Email Open Rate</div><div class="kpi-sub">B2B drip campaigns</div></div>
+      <div class="kpi"><div class="kpi-val">25%</div><div class="kpi-lbl">WhatsApp Response</div><div class="kpi-sub">Per broadcast</div></div>
+      <div class="kpi"><div class="kpi-val">15+</div><div class="kpi-lbl">CFO Events / Quarter</div><div class="kpi-sub">Breakfast + webinar</div></div>
+      <div class="kpi"><div class="kpi-val">50+</div><div class="kpi-lbl">CA Partners Empanelled</div><div class="kpi-sub">Referral network</div></div>
+      <div class="kpi"><div class="kpi-val">20%</div><div class="kpi-lbl">Lead → Deposit Rate</div><div class="kpi-sub">End-to-end conversion</div></div>
+      <div class="kpi"><div class="kpi-val">80%</div><div class="kpi-lbl">ICD Renewal Rate</div><div class="kpi-sub">Retention target</div></div>
+      <div class="kpi"><div class="kpi-val">₹5Cr+</div><div class="kpi-lbl">Avg. ICD Ticket Size</div><div class="kpi-sub">Target per corporate</div></div>
+      <div class="kpi"><div class="kpi-val">30+</div><div class="kpi-lbl">Referrals / Quarter</div><div class="kpi-sub">From existing depositors</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<div class="wrapper">
+  <footer class="footer">
+    <div class="f-brand">Prachay <span>Group</span></div>
+    <div class="f-note">Prachay Capital Limited · 14th Floor, Next Gen Avenue, Senapati Bapat Road, Pune · info@prachay.com · prachay.com · RBI Registered NBFC<br>This document is confidential and for internal use only. Subject to applicable RBI and Companies Act regulations.</div>
+  </footer>
+</div>
+
+<script>
+function go(id){document.getElementById(id)?.scrollIntoView({behavior:'smooth',block:'start'});}
+function showT(key){
+  document.querySelectorAll('.tmpl-box').forEach(b=>b.classList.remove('on'));
+  document.querySelectorAll('.t-btn').forEach(b=>b.classList.remove('on'));
+  document.getElementById('t-'+key).classList.add('on');
+  event.target.classList.add('on');
+}
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');});},{threshold:0.07,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.rev').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
